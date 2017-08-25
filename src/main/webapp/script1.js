@@ -1,13 +1,23 @@
 
 
-function loadWars() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-     console.log(this.responseText);
-     document.getElementById("result").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", "https://swapi.co/api/people/2/?format=json", true);
-  xhttp.send();
+function readBrowserProperties() {
+    InstallTrigger;
+    safari;
+    isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+    isFirefox = typeof InstallTrigger !== 'undefined';
+    isSafari = /constructor/i.test(window.HTMLElement) || (function (p) {
+        return p.toString() === "[object SafariRemoteNotification]";
+    })(!window['safari'] || safari.pushNotification);
+    isIE = /*@cc_on!@*/false || !!document.documentMode;
+    isEdge = !isIE && !!window.StyleMedia;
+    isChrome = !!window.chrome && !!window.chrome.webstore;
+    isBlink = (isChrome || isOpera) && !!window.CSS;
+
+    console.log("isOpera", isOpera);
+    console.log("isFirefox", isFirefox);
+    console.log("isSafari", isSafari);
+    console.log("isIE", isIE);
+    console.log("isEdge", isEdge);
+    console.log("isChrome", isChrome);
+    console.log("isBlink", isBlink);
 }

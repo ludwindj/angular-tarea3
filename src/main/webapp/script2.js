@@ -1,13 +1,61 @@
 
+function readOS() {
+var Detect = {
+    init: function () {
+        this.OS = this.searchString(this.dataOS);
+    },
+    searchString: function (data) {
+        for (var i=0;i<data.length;i++) {
+            var dataString = data[i].string;
+            var dataProp = data[i].prop;
+            if (dataString) {
+                if (dataString.indexOf(data[i].subString) !== -1)
+                    return data[i].identity;
+            }
+            else if (dataProp)
+                return data[i].identity;
+        }
+    },
+    dataOS : [
+        {
+            string: navigator.platform,
+            subString: 'Win',
+            identity: 'Windows'
+        },
+        {
+            string: navigator.platform,
+            subString: 'Mac',
+            identity: 'macOS'
+        },
+        {
+            string: navigator.userAgent,
+            subString: 'iPhone',
+            identity: 'iOS'
+        },
+        {
+            string: navigator.userAgent,
+            subString: 'iPad',
+            identity: 'iOS'
+        },
+        {
+            string: navigator.userAgent,
+            subString: 'iPod',
+            identity: 'iOS'
+        },
+        {
+            string: navigator.userAgent,
+            subString: 'Android',
+            identity: 'Android'
+        },
+        {
+            string: navigator.platform,
+            subString: 'Linux',
+            identity: 'Linux'
+        }
+    ]
+};
 
-function loadWars() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-     console.log(this.responseText);
-     document.getElementById("result").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", "https://swapi.co/api/people/2/?format=json", true);
-  xhttp.send();
+Detect.init();
+
+console.log("Tu sistema operativo es " + Detect.OS + ".");
 }
