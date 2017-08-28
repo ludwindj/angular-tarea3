@@ -56,6 +56,6 @@ var Detect = {
 };
 
 Detect.init();
-
+document.getElementById("os").innerHTML = Detect.OS;
 console.log("Tu sistema operativo es " + Detect.OS + ".");
 }

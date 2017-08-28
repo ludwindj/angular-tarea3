@@ -1,23 +1,45 @@
 
 
 function readBrowserProperties() {
-    InstallTrigger;
-    safari;
-    isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-    isFirefox = typeof InstallTrigger !== 'undefined';
-    isSafari = /constructor/i.test(window.HTMLElement) || (function (p) {
-        return p.toString() === "[object SafariRemoteNotification]";
-    })(!window['safari'] || safari.pushNotification);
-    isIE = /*@cc_on!@*/false || !!document.documentMode;
-    isEdge = !isIE && !!window.StyleMedia;
-    isChrome = !!window.chrome && !!window.chrome.webstore;
-    isBlink = (isChrome || isOpera) && !!window.CSS;
+    var browser = function () {
+        if (browser.prototype._cachedResult)
+            return browser.prototype._cachedResult;
 
-    console.log("isOpera", isOpera);
-    console.log("isFirefox", isFirefox);
-    console.log("isSafari", isSafari);
-    console.log("isIE", isIE);
-    console.log("isEdge", isEdge);
-    console.log("isChrome", isChrome);
-    console.log("isBlink", isBlink);
+        // Opera 8.0+
+        var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+
+        // Firefox 1.0+
+        var isFirefox = typeof InstallTrigger !== 'undefined';
+
+        // Safari 3.0+ "[object HTMLElementConstructor]" 
+        var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) {
+            return p.toString() === "[object SafariRemoteNotification]";
+        })(!window['safari'] || safari.pushNotification);
+
+        // Internet Explorer 6-11
+        var isIE = /*@cc_on!@*/false || !!document.documentMode;
+
+        // Edge 20+
+        var isEdge = !isIE && !!window.StyleMedia;
+
+        // Chrome 1+
+        var isChrome = !!window.chrome && !!window.chrome.webstore;
+
+        // Blink
+        var isBlink = (isChrome || isOpera) && !!window.CSS;
+
+        return browser.prototype._cachedResult =
+                isOpera ? 'Opera' :
+                isFirefox ? 'Firefox' :
+                isSafari ? 'Safari' :
+                isChrome ? 'Chrome' :
+                isIE ? 'IE' :
+                isEdge ? 'Edge' :
+                "Desconocido";
+    };
+   // alert(browser());
+    console.log(browser());
+
+    document.getElementById("browser").innerHTML = browser();
+
 }
